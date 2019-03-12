@@ -99,6 +99,10 @@ class SiteController extends Controller
         return $this->render('index');
     }
 
+
+
+
+
     public function actionFreeview($id)
     {
         $article = Article::findOne($id);

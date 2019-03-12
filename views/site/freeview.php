@@ -84,7 +84,7 @@ use yii\widgets\LinkPager;
                                 <h3 class="main-title"><?= $article->title; ?></h3>
                                 <div class="entry-meta">
                                     <span><i class="fa fa-user"></i> <a href="#"> Danny Jones</a></span>
-                                    <span><i class="fa fa-folder"></i> <a href="#"> <?= $article->category->title; ?></a></span>
+                                    <span><i class="fa fa-folder"></i> <a href="#"> <?= !$article->category ? '' : $article->category->title; ?></a></span>
                                     <span><i class="fa fa-clock-o"></i> <?= $article->date; ?></span>
                                     <span><i class="fa fa-comment"></i> <span class="counter">14</span> Comments</span>
                                     <span><i class="fa fa-eye"></i> <span class="counter"><?= (int) $article->viewed; ?></span></span>

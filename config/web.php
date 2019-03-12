@@ -5,6 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'language' => 'uz',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -26,15 +27,15 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-//            'transport' => [
-//                'class' => 'Swift_SmtpTransport',
-//                'host' => 'smtp.gmail.com',
-//                'username' => 'merespect4077@gmail.com',
-//                'password' => 'Ytit@2018',
-//                'port' => '587',
-//                'encryption' => 'tls',
-//            ],
-//            'viewPath' => '@common/mail',
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'merespect4077@gmail.com',
+                'password' => 'Ytit@2018',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
+            'viewPath' => '@app/mail',
             // 'useFileTransport' => false;
             // send all mails to a file by default. You have to set
             // 'useFileTransport' to false and configure a transport
@@ -45,12 +46,27 @@ $config = [
         'db' => $db,
         
         'urlManager' => [
+            'class' => 'codemix\localeurls\UrlManager',
+            'enableLanguageDetection' => false,
+            'enableDefaultLanguageUrlCode' => true,
+            'languages' => ['uz', 'en', 'ru'],
+           // 'default_language' => 'uz', //основной язык (по-умолчанию)
+            //'show_default' => false,
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+
             'rules' => [
             ],
         ],
-        
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages',
+                    'sourceLanguage' => 'uz',
+                ],
+            ],
+        ],
     ],
 
     'modules' => [

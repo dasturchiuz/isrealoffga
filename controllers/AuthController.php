@@ -74,6 +74,36 @@ class AuthController extends Controller
             'model' => $model,
         ]);
     }
+    //so'rov yuborish
+    public function actionRequestPasswordReset(){
+        $model=new \app\models\PasswordReset();
+        $model->scenario=\app\models\PasswordReset::STEP_SEND;
+        if($model->load(Yii::$app->request->post()) && $model->validate())
+        {
+            $model->sendTokenEmail();
+        }
+        return $this->render('requestpassreset', compact('model'));
+    }
+    //kelgan so'rovni tekshirish
+    public function actionResetPassword($token){
+        $user=\app\models\User::find()->where(['auth_key'=>$token])->one();
+        if(!$user){
+            Yii::$app->session->setFlash('error', Yii::t('app', ':((((('));//bettayam
+            return $this->redirect(\yii\helpers\Url::base('http'));
+        }
+        $model=new \app\models\PasswordReset();
+        $model->scenario=\app\models\PasswordReset::STEP_CHECK;
+        $model->token=$token;
+        if($model->load(Yii::$app->request->post()) && $model->validate())
+        {
+            $user->password=$model->pass;
+            $user->auth_key=\Yii::$app->security->generateRandomString();
+            $user->save(false);
+            Yii::$app->session->setFlash('success', Yii::t('app', ':)'));//betta uzizi habarizni yozasiz
+            return $this->redirect(\yii\helpers\Url::base());
+        }
+        return $this->render('passreset', compact('model'));
+    }
 
     /**
      * Logout action.
@@ -148,24 +178,24 @@ class AuthController extends Controller
         ]);
     }
 
-    public function actionResetPassword($key)
-    {
-        try {
-            $model = new ResetPasswordForm($key);
-        }
-        catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
-
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->validate() && $model->resetPassword()) {
-                Yii::$app->getSession()->setFlash('warning', 'Parol o`zgartirildi.');
-                return $this->redirect(['/auth/login']);
-            }
-        }
-
-        return $this->render('resetPassword', [
-            'model' => $model,
-        ]);
-    }
+//    public function actionResetPassword($key)
+//    {
+//        try {
+//            $model = new ResetPasswordForm($key);
+//        }
+//        catch (InvalidParamException $e) {
+//            throw new BadRequestHttpException($e->getMessage());
+//        }
+//
+//        if ($model->load(Yii::$app->request->post())) {
+//            if ($model->validate() && $model->resetPassword()) {
+//                Yii::$app->getSession()->setFlash('warning', 'Parol o`zgartirildi.');
+//                return $this->redirect(['/auth/login']);
+//            }
+//        }
+//
+//        return $this->render('resetPassword', [
+//            'model' => $model,
+//        ]);
+//    }
 }

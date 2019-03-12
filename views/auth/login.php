@@ -55,7 +55,7 @@ use yii\helpers\Url;
     <?php ActiveForm::end(); ?>
     </div>
         <div class="clearbox10"></div>
-            <h4 align="center" class="fade-up"><a href="/auth/send-email">Parolni unutdingizmi?</a></h4>
+            <h4 align="center" class="fade-up"><a href="/auth/request-password-reset">Parolni unutdingizmi?</a></h4>
         <div class="clearbox20"></div>
             <div class="container">
                 <div class="row fade-up">

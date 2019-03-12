@@ -9,14 +9,16 @@
  */
 
 use yii\helpers\Html;
-
-echo 'Salom'.Html::encode($user->name).'.';
-
-echo Html::a('Parolni o`zgartirish uchun ushbu ssilkaga bosing.',
-    Yii::$app->urlManager->createAbsoluteUrl(
-        [
-            '/auth/reset-password',
-            'key' => $user->secret_key
-        ]
-    )
+$url=Yii::$app->urlManager->createAbsoluteUrl(
+    [
+        '/auth/reset-password',
+        'token'=>$token
+    ]
 );
+?>
+
+<h2>Здраствуйте <?=$username?>,</h2>
+
+<p>Перейдите по ссылке ниже, чтобы сбросить пароль:</p>
+
+<?= Html::a($url,$url);?>

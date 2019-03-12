@@ -34,7 +34,7 @@ use yii\widgets\LinkPager;
                             <?php endif; ?>
 
                             <div class="team-content fade-up">
-                                <h5><?= $article->title; ?><small class="role muted"><i class="fa fa-folder" style="color: #00b29e;"></i> <?= $article->category->title; ?></small></h5>
+                                <h5><?= $article->title; ?><small class="role muted"><i class="fa fa-folder" style="color: #00b29e;"></i> <?= !$article->category ? '' : $article->category->title; ?></small></h5>
                                 <div class="clearbox10"></div>
                                 <div class="center">
                                     <a href="<?= Url::toRoute(['site/freeview', 'id' => $article->id]); ?>" class="btn-learn">BATAFSIL <span class="arrow">❯</span></a>
